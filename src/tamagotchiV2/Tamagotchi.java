@@ -18,6 +18,7 @@ public class Tamagotchi {
 		this.status = status;
 
 	}
+
 	/**
 	 * Appel au constructeur par default de Tamagochi
 	 * 
@@ -29,7 +30,7 @@ public class Tamagotchi {
 		this.status = true;
 
 	}
-	
+
 	// getter et setter
 	public String getNom() {
 		return nom;
@@ -62,10 +63,12 @@ public class Tamagotchi {
 	public void setStatus(Boolean status) {
 		this.status = status;
 	}
-/**
- *  Tamagochi augumente sa poids quand il mange chaque fois
- * @param fois
- */
+
+	/**
+	 * Tamagochi augumente sa poids quand il mange chaque fois
+	 * 
+	 * @param fois
+	 */
 	public void manger(int fois) {
 		if (status == true) {
 			// son poids actuel
@@ -74,9 +77,11 @@ public class Tamagotchi {
 			poids = poids + fois;
 
 			if (poids > 0 && poids <= 15) {
-				System.out.println("Yummy! Votre tamagotchi a bien mangé.");
-				// Tamagochi vie
-				setStatus(true);
+				if (poids <= 3) {
+					System.out.println("Votre tamagotchi a encore faim ");
+				} else {
+					System.out.println("Yummy! Votre tamagotchi a bien mangé.");
+				}
 			} else {
 				System.out.println("Trop mangé! Votre tamagochi meurt");
 				// Tamagochi murt
@@ -86,38 +91,85 @@ public class Tamagotchi {
 			System.out.println("Quel dommage, votre Tamagotchi est mort! Creer un autre, stp");
 		}
 	}
-/**
- * Tamagotchi dort pour recharger sa energie 
- */
+
+	public void manger(String full) {
+		if (status == true) {
+			if (full.matches("full")) {
+				poids = 15;
+				System.out.println("Yummy! Votre tamagotchi a bien mangé.");
+			} else {
+				System.out.println("Vieullez saisir encore le mot clé 'full',svp!");
+			}
+		} else {
+			System.out.println("Quel dommage, votre Tamagotchi est mort! Creer un autre, stp");
+		}
+	}
+
+	/**
+	 * Tamagotchi dort pour recharger sa energie
+	 */
 	public void dormir() {
 		if (status == true) {
 			setEnergie(10);
 			setPoids(1); // quand Tamagotchi dort, il perd du poids.
 			System.out.println("Cool! Votre tamagotchi a bien dormi.( Plein d'énergie )");
+			System.out.println("Votre tamagotchi a trop faim ");
 			// Tamagochi vie
 			setStatus(true);
 		} else {
 			System.out.println("Quel dommage, votre Tamagotchi est mort! Creer un autre, stp");
 		}
 	}
-/**
- * Tamagotchi perd sa energie quand il joue
- * @param fois 
- */
+
+	/**
+	 * Tamagotchi perd sa energie quand il joue
+	 * 
+	 * @param fois
+	 */
 	public void jouer(int fois) {
-		energie = getEnergie();
-		energie = energie - fois;
-		if (energie < 0) {
-			System.out.println("Votre tamagotchi a besoin de dormir");
-			setEnergie(0);
-			// Tamagochi murt
-			setStatus(false);
+		if (status == true) {
+			energie = getEnergie();
+			energie = energie - fois;
+			if (energie < 0) {
+				System.out.println("Votre tamagotchi n'a plus d'energie. Il meurt ");
+				setEnergie(0);
+				// Tamagochi murt
+				setStatus(false);
+			} else if (energie <= 1) {
+				System.out.println("Très fatigué. Votre tamagotchi a besoin de dormir");
+			} else {
+				System.out.println("Bien joué!L'énergie de votre tamagochi reste: " + energie);
+				// Tamagochi vie
+				setStatus(true);
+			}
 		} else {
-			System.out.println("Bien joué!L'énergie de votre tamagochi reste: " + energie);
-			// Tamagochi vie
-			setStatus(true);
+			System.out.println("Quel dommage, votre Tamagotchi est mort! Creer un autre, stp");
 		}
 	}
+
+	/**
+	 * aller aux toilettes
+	 */
+	public void faireWC() {
+		if (status == true) {
+			poids = poids / 3;
+			System.out.println("C'est très bien! Votre tamagotchi a besoin de doucher :) toute de suite, svp");
+		} else {
+			System.out.println("Quel dommage, votre Tamagotchi est mort! Creer un autre, stp");
+		}
+	}
+
+	/**
+	 * doucher
+	 */
+	public void faireDoucher() {
+		if (status == true) {
+			System.out.println("C'est super! Merci :) ");
+		} else {
+			System.out.println("Quel dommage, votre Tamagotchi est mort! Creer un autre, stp");
+		}
+	}
+
 	/**
 	 * Affichage les infos actualités
 	 */
