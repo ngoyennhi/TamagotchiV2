@@ -25,7 +25,8 @@ public class Tamagotchi {
 	 * 
 	 */
 	public Tamagotchi() {
-		this.nom = "toto";
+		System.out.println("Saisissez le nom de votre tamagotchi,svp.");
+		this.nom = Clavier.lireString();
 		this.energie = 1;
 		this.poids = 1;
 		this.status = true;
@@ -95,8 +96,14 @@ public class Tamagotchi {
 	public void manger(String full) {
 		if (status == true) {
 			if (full.matches("full")) {
+				if (poids == 15) {
+					System.out.println("Quel dommage, votre Tamagotchi est mort! Creer un autre, stp");
+					status = false;
+				} else {
 				poids = 15;
 				System.out.println("Yummy! Votre tamagotchi a bien mangé.");
+				}
+
 			} else {
 				System.out.println("Vieullez saisir encore le mot clé 'full',svp!");
 			}
@@ -117,7 +124,7 @@ public class Tamagotchi {
 			// Tamagochi vie
 			setStatus(true);
 		} else {
-			System.out.println("Quel dommage, votre Tamagotchi est mort! Creer un autre, stp");
+			System.out.println("Quel dommage, votre Tamagotchi est mort à cause de manger trop! Creer un autre, stp");
 		}
 	}
 
@@ -130,30 +137,38 @@ public class Tamagotchi {
 		if (status == true) {
 			energie = getEnergie();
 			energie = energie - fois;
-			if (energie < 0) {
+			if (energie <= 0) {
 				System.out.println("Votre tamagotchi n'a plus d'energie. Il meurt ");
 				setEnergie(0);
 				// Tamagochi murt
 				setStatus(false);
-			} else if (energie <= 1) {
+			} else if (energie > 0 && energie <= 2) {
+				System.out.println();
 				System.out.println("Très fatigué. Votre tamagotchi a besoin de dormir");
 			} else {
+				System.out.println();
 				System.out.println("Bien joué!L'énergie de votre tamagochi reste: " + energie);
 				// Tamagochi vie
 				setStatus(true);
 			}
 		} else {
-			System.out.println("Quel dommage, votre Tamagotchi est mort! Creer un autre, stp");
+			System.out.println("Quel dommage, votre Tamagotchi est mort à cause de jouer trop! Creer un autre, stp");
 		}
 	}
+	
 
 	/**
 	 * aller aux toilettes
 	 */
 	public void faireWC() {
 		if (status == true) {
+			// poids actualité
+			poids = Poids();
+			// poids après etre allé aux toillets
 			poids = poids / 3;
+			System.out.println();
 			System.out.println("C'est très bien! Votre tamagotchi a besoin de doucher :) toute de suite, svp");
+			System.out.println();
 		} else {
 			System.out.println("Quel dommage, votre Tamagotchi est mort! Creer un autre, stp");
 		}
@@ -174,15 +189,22 @@ public class Tamagotchi {
 	 * Affichage les infos actualités
 	 */
 	public void affiche() {
+		System.out.println();
+		System.out.println("-----------(@_@)-----------");
 		System.out.println("Voici les infos actualitées de votre Tamagotchi: ");
 		System.out.println("Son nom: " + getNom());
 		System.out.println("Sa energie: " + getEnergie());
-		System.out.println("Son poids: " + Poids());
+		System.out.println("Son poids: " + Poids() + " kg");
+	
 		if (getStatus() == true) {
 			System.out.println("Votre Tamagotchi vie");
 		} else {
-			System.out.println("Votre Tamagotchi est mort");
+			System.out.println("Votre Tamagotchi est mort. Game Over T_T ");
 		}
+		System.out.println();
+		System.out.println("Attention! " + getNom() +" va mourir si sa energie est 0 ou si son poids est depassé 15 kg ");
+		System.out.println("-----------(@_@)-----------");
+		System.out.println();
 	}
 			/**
 			 * Methode affichage une liste de Tamagotchis
@@ -192,7 +214,6 @@ public class Tamagotchi {
 
 				for (int i = 0; i < liste.size(); i++) {
 					System.out.println("Tamagotchi à l'index : " + i);
-					System.out.println();
 					liste.get(i).affiche();
 					System.out.println();
 				}
