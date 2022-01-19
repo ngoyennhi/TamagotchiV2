@@ -11,6 +11,7 @@ public class MainTestTamagotchiV2 {
 		System.out.println("Pour commencer le jeu,...");
 		System.out.println("Tapez 1 si vous voulez avoir une famille de 3 tamagotchis");
 		System.out.println("Tapez 2 si vous voulez avoir un seul tamagotchi");
+		System.out.println("Tapez 3 si vous voulez trier un groupe de 3 tamagotchis");
 		int mode = Clavier.lireInt();
 		switch (mode) {
 		/**
@@ -21,78 +22,88 @@ public class MainTestTamagotchiV2 {
 			FamileTamagotchi.saisirTamas(listeTamas);
 			Tamagotchi.afficheList(listeTamas);
 			System.out.println();
-			//numbre de Tamagotchis dans la famille
+			
+			// nombre de Tamagotchis dans la famille
 			int nTamas = listeTamas.size();
-			//GAME OVER s'il n'a plus de Tamagotchi dans la famille
-			while(nTamas > 0) {
+			// GAME OVER s'il n'a plus de Tamagotchi dans la famille
+			while (nTamas > 0) {
 				System.out.println("Choisissez un tamagotchi dans la famille, svp");
-			System.out.println("il y a " + nTamas + " dans la famille. ( tapez un chiffre entre 0 et " + (nTamas-1)+ " ), svp");
-			int indexTama = Clavier.lireInt();
-			String nomTamaIndex = listeTamas.get(indexTama).getNom();
-			// status de vie de votre Tamagotchi
-			Boolean statusVie = listeTamas.get(indexTama).getStatus();
-			while (statusVie) {
+				System.out.println("il y a " + nTamas + " dans la famille, svp");
+				// afficher le nom de Tamagotchi dans la liste pour le savoir et le choisir
+				// facilement
+				for (int i = 0; i < nTamas; i++) {
+					System.out.println(i + "-" + listeTamas.get(i).getNom());
+				}
+				;
+				// saisir l'index de Tamagotchi
+				int indexTama = Clavier.lireInt();
+
+				String nomTamaIndex = listeTamas.get(indexTama).getNom();
+				// infos de Tamagotchi selectioné
 				System.out.println("! *¨¨_¨¨* !");
 				System.out.println(nomTamaIndex + " est prêt!");
 				System.out.println("! *¨¨_¨¨* !");
 				System.out.println();
 				System.out.println("Choisissez un activité que vous voulez, svp");
-			System.out.println("0-jouer   1-dormir   2-manger   3-aller aux toilettes  4-se doucher");
-			int activeTama = Clavier.lireInt();
-			switch (activeTama) {
-			// jouer
-			case 0:
-				System.out.println("Combien fois voulez-vous jouer avec " + nomTamaIndex + " ?");
-				System.out.println("saissisez un chiffre entier entre 1 et 10, svp ");
-				fois = Clavier.lireInt();
-				listeTamas.get(indexTama).jouer(fois);
-				break;
-			// dormir
-			case 1:
-				listeTamas.get(indexTama).dormir();
-				break;
-			// manger
-			case 2:
-				System.out.println(nomTamaIndex + " mangera full ou combien fois?");
-				System.out.println("0-full      1-Nourri par plusieurs fois");
-				fois = Clavier.lireInt();
-				if (fois == 1) {
-					System.out.println("Combien fois voulez-vous nourrir " + nomTamaIndex + " ?");
-					System.out.println("saissisez un chiffre entier entre 1 et 15, svp ");
+				System.out.println(
+						"0-jouer   1-dormir   2-manger   3-aller aux toilettes  4-se doucher   5-choisir un autre Tamagotchi");
+				int activeTama = Clavier.lireInt();
+				switch (activeTama) {
+				// jouer
+				case 0:
+					System.out.println("Combien fois voulez-vous jouer avec " + nomTamaIndex + " ?");
+					System.out.println("saissisez un chiffre entier entre 1 et 10, svp ");
 					fois = Clavier.lireInt();
-					listeTamas.get(indexTama).manger(fois);
-				} else {
-					listeTamas.get(indexTama).manger("full");
-				}
-				break;
-			// aller aux toilettes
-			case 3:
-				listeTamas.get(indexTama).faireWC();
-				break;
-			// se doucher
-			case 4:
-				listeTamas.get(indexTama).faireDoucher();
-				break;
-			default:
-				System.out.println("Veuillez selectionner un chiffre parmi les chiffres proposés, svp");
-				break;
-			}
-			listeTamas.get(indexTama).affiche();
-			// mettre à jours status de vie de votre Tamagotchi
-			statusVie = listeTamas.get(indexTama).getStatus();
+					listeTamas.get(indexTama).jouer(fois);
+					break;
+				// dormir
+				case 1:
+					listeTamas.get(indexTama).dormir();
+					break;
+				// manger
+				case 2:
+					System.out.println(nomTamaIndex + " mangera full ou combien fois?");
+					System.out.println("0-full      1-Nourri par plusieurs fois");
+					fois = Clavier.lireInt();
+					if (fois == 1) {
+						System.out.println("Combien fois voulez-vous nourrir " + nomTamaIndex + " ?");
+						System.out.println("saissisez un chiffre entier entre 1 et 15, svp ");
+						fois = Clavier.lireInt();
+						listeTamas.get(indexTama).manger(fois);
+					} else {
+						listeTamas.get(indexTama).manger("full");
+					}
+					break;
+				// aller aux toilettes
+				case 3:
+					listeTamas.get(indexTama).faireWC();
+					break;
+				// se doucher
+				case 4:
+					listeTamas.get(indexTama).faireDoucher();
+					break;
 
-			if (statusVie == false) {
-				System.out.println(nomTamaIndex + " est mort." + nomTamaIndex + " n'est plus dans la famille.");
-				listeTamas.remove(indexTama);
-				System.out.println("Veuillez choisir un autre tamagotchi, merci.");
-				nTamas = nTamas - 1;
+				default:
+					System.out.println("Veuillez selectionner un chiffre parmi les chiffres proposés, svp");
+					break;
+				}
+				listeTamas.get(indexTama).affiche();
+
+				// mettre à jours status de vie de votre Tamagotchi
+				Boolean statusVie = listeTamas.get(indexTama).getStatus();
+
+				if (statusVie == false) {
+					System.out.println(nomTamaIndex + " est mort." + nomTamaIndex + " n'est plus dans la famille.");
+					listeTamas.remove(indexTama);
+					System.out.println("Veuillez choisir un autre tamagotchi, merci.");
+					nTamas = nTamas - 1;
+				}
 			}
-			}
-			}	
 			break;
-			/**
-			 * Partie 2: jouer avec un seul Tamagotchis 
-			 */
+			
+		/**
+		 * Partie 2: jouer avec un seul Tamagotchis
+		 */
 		case 2:
 			Tamagotchi heoTamagotchi = new Tamagotchi();
 
@@ -148,30 +159,34 @@ public class MainTestTamagotchiV2 {
 				vie = heoTamagotchi.getStatus();
 			}
 			break;
+		case 3:
+			ArrayList<Tamagotchi> listeTamas3 = new ArrayList<Tamagotchi>();
+			FamileTamagotchi.saisirTamas(listeTamas3);
+//			Tamagotchi.afficheList(listeTamas3);
+			System.out.println();
+			/*
+			 * Demande d'afficher le tamagotchi plus GRAND et plus PETIT
+			 */	
+			//indiquer le tamagotchi le plus petit
+			System.out.println("----------Voici le Tamagotchi qui est plus petit ( tri par poids) ---------");
+			Tamagotchi.citerTamaPlusPetit(listeTamas3);
+			System.out.println();
+			//indiquer le tamagotchi le plus grand
+			System.out.println("----------Voici le Tamagotchi qui est plus grand ( tri par poids) ---------");
+			Tamagotchi.citerTamaPlusGrand(listeTamas3);
+
 		default:
-			System.out.println("Veuillez sélectionner un option, svp");
+			System.out.println("Recommencez le jeu, svp!");
 			break;
 		}
-		
+
 //		/*
 //		 * Demande de rechercher un tamagotchi par son nom, et afficher ses caractéristiques
 //		 */
 //		System.out.println("----------test10:Chercher un Tamagotchi par son nom d'une liste ---------");
 //		FamileTamagotchi.rechercherTamaParNom(listeTamas, "(?i)Toto.*");
 //		System.out.println();
-//		
-//		/*
-//		 * Demande d'afficher le tamagotchi plus GRAND et plus PETIT
-//		 */	
-//		//indiquer le tamagotchi le plus petit
-//		System.out.println("----------test11:Chercher un Tamagotchi qui est plus petit ( tri par poids) ---------");
-//		Tamagotchi.citerTamaPlusPetit(listeTamas);
-//		System.out.println();
-//		//indiquer le tamagotchi le plus grand
-//		System.out.println("----------test12:Chercher un Tamagotchi qui est plus grand ( tri par poids) ---------");
-//		Tamagotchi.citerTamaPlusGrand(listeTamas);
-//		System.out.println();
-//		
+	
 
 	}
 

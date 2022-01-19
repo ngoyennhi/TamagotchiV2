@@ -260,7 +260,7 @@ public class Tamagotchi {
 
 			public static void citerTamaPlusPetit(ArrayList<Tamagotchi> liste) {
 				ArrayList<Tamagotchi> liste_TamagotchiTriTaille = Tamagotchi.tri_TamagotchiPoids(liste);
-				Tamagotchi TamagotchiPlusPetit = new Tamagotchi();
+				Tamagotchi TamagotchiPlusPetit;
 				TamagotchiPlusPetit = liste_TamagotchiTriTaille.get(0);
 				System.out.println("Voici le Tamagotchi qui est plus petit: ");
 				TamagotchiPlusPetit.affiche();
@@ -268,7 +268,7 @@ public class Tamagotchi {
 			
 			public static void citerTamaPlusGrand(ArrayList<Tamagotchi> liste) {
 				ArrayList<Tamagotchi> liste_TamagotchiTriTaille = Tamagotchi.tri_TamagotchiPoids(liste);
-				Tamagotchi TamagotchiPlusGrand = new Tamagotchi();
+				Tamagotchi TamagotchiPlusGrand ;
 				int indexPlusGrand = liste_TamagotchiTriTaille.size() - 1;
 				TamagotchiPlusGrand = liste_TamagotchiTriTaille.get(indexPlusGrand);
 				System.out.println("Voici le Tamagotchi qui est plus grand: ");
